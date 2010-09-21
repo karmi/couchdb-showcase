@@ -4,7 +4,7 @@
 
 function(doc, req) {
   
-  var full_name = doc.first_name + doc.last_name
+  var full_name = doc.first_name + ' ' + doc.last_name
 
   doc.phones.toString = function() {
     var phones = []; for (prop in this) { if ( prop != 'toString' ) phones.push( this[prop] + ' (' + prop + ')' ) }
