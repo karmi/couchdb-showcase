@@ -15,11 +15,12 @@ class Array
   end
 end
 
+Database = CouchRest.database!('http://127.0.0.1:5984/addressbook')
+
 desc "Create COUNT documents in adressbook"
 task :fake do
   count = ENV['COUNT'] || 1
 
-  Database = CouchRest.database!('http://127.0.0.1:5984/addressbook')
   Database.recreate!
 
   count.to_i.times do |i|
@@ -70,7 +71,11 @@ desc "Upload database logic from ./couchdb/_design/views"
 task :views do
   require 'couch_docs/design_directory' # Note: Gem version blows up on RestClient version incompatibility with CouchRest
   dir = CouchDocs::DesignDirectory.new('couchdb/_design/person')
-  p dir.to_hash
-  Database = CouchRest.database!('http://127.0.0.1:5984/addressbook')
-  Database.save_doc(dir.to_hash.update({ '_id' => '_design/person', 'language' => 'javascript' }))
+  doc = dir.to_hash
+  doc.update '_id' => '_design/person', 'language' => 'javascript'
+  rev = Database.get('_design/person')['_rev'] rescue nil
+  doc.update( {'_rev' => rev} ) if rev
+  p doc['views'].keys
+  response = Database.save_doc(doc)
+  p response
 end
