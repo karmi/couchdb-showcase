@@ -9,6 +9,12 @@ class String
   end
 end
 
+class Array
+  def random_slice
+    shuffle.slice( Kernel.rand(self.size),  Kernel.rand(self.size)+1)
+  end
+end
+
 desc "Create COUNT documents in adressbook"
 task :fake do
   count = ENV['COUNT'] || 1
@@ -20,10 +26,11 @@ task :fake do
     phones = {}
     addresses = {}
 
-    occupation = ''
+    occupation = %w{model programmer doctor}.rand
+
     birthday = Time.local(Time.now.year - rand(80), rand(12)+1, rand(31)+1).strftime("%Y/%m/%d")
 
-    groups = []
+    groups = %w{family friends work}.random_slice
 
     doc = {
       :id => id,
