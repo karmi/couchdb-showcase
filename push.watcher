@@ -1,0 +1,34 @@
+require 'term/ansicolor'
+
+class String; include Term::ANSIColor; end
+
+# Automatically push application to Couch when any source file is changed
+# Uses the Watchr Rubygem [http://github.com/mynyml/watchr]
+
+puts "* Watchr for AddressBook started ..."
+
+watch( 'couchdb/_design/person/.*' )  do |file|
+  command = "rake views"
+  puts   "* #{file} changed, executing '`#{command}`'..."
+  output = `#{command} 2>&1`
+  if $?.success?
+    STDERR.puts Term::ANSIColor.on_green("#{Time.now.strftime('%H:%M:%S')} | Pushed updates to CouchDB")
+    # STDERR.puts output
+  else
+    STDERR.puts Term::ANSIColor.on_red("[!] ERROR")
+    STDERR.puts output
+  end
+end
+
+watch( 'couchdb/_design/assets/.*' )  do |file|
+  command = "rake assets"
+  puts   "* #{file} changed, executing '`#{command}`'..."
+  output = `#{command} 2>&1`
+  if $?.success?
+    STDERR.puts Term::ANSIColor.on_green("#{Time.now.strftime('%H:%M:%S')} | Pushed updates to CouchDB")
+    # STDERR.puts output
+  else
+    STDERR.puts Term::ANSIColor.on_red("[!] ERROR")
+    STDERR.puts output
+  end
+end
