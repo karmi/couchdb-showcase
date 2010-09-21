@@ -20,32 +20,40 @@ task :fake do
   count = ENV['COUNT'] || 1
 
   count.to_i.times do |i|
-    name = [Faker::Name.first_name, Faker::Name.last_name]
-    id   = name.join(' ').parameterize
+    name       = [Faker::Name.first_name, Faker::Name.last_name]
+    id         = name.join(' ').parameterize
 
-    phones = {}
-    addresses = {}
+    phones     = %w{mobile home work}.random_slice.inject({})  { |hash, type| hash[type] = Faker::PhoneNumber.phone_number; hash }
+    addresses  = %w{work home       }.random_slice.inject({}) do |hash, type|
+      hash[type] = {
+        :street  => Faker::Address.street_name,
+        :number  => Faker.numerify(%w{### #### ###/##}.rand),
+        :city    => Faker::Address.city,
+        :country => ['Australia', 'United Kingdom', 'New Zealand'].rand
+      }
+      hash
+    end
 
     occupation = %w{model programmer doctor}.rand
 
-    birthday = Time.local(Time.now.year - rand(80), rand(12)+1, rand(31)+1).strftime("%Y/%m/%d")
+    birthday   = Time.local(Time.now.year - rand(80), rand(12)+1, rand(31)+1).strftime("%Y/%m/%d")
 
-    groups = %w{family friends work}.random_slice
+    groups     = %w{family friends work}.random_slice
+
 
     doc = {
-      :id => id,
+      :id         => id,
       :first_name => name.first,
       :last_name  => name.last,
 
-      :phones => phones,
-      :phones => addresses,
+      :phones     => phones,
+      :addresses  => addresses,
 
       :occupation => occupation,
 
-      :birthday => birthday,
+      :birthday   => birthday,
 
-      :groups => groups
-
+      :groups     => groups
     }
 
     puts doc.to_json
