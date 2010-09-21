@@ -29,7 +29,7 @@ task :populate do
     name       = [Faker::Name.first_name, Faker::Name.last_name]
     id         = name.join(' ').parameterize
 
-    phones     = %w{mobile home work}.random_slice.inject({})  { |hash, type| hash[type] = Faker::PhoneNumber.phone_number; hash }
+    phones     = %w{cell home work}.random_slice.inject({})  { |hash, type| hash[type] = Faker::PhoneNumber.phone_number; hash }
     addresses  = %w{work home       }.random_slice.inject({}) do |hash, type|
       hash[type] = {
         :street  => Faker::Address.street_name,
