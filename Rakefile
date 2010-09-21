@@ -18,7 +18,7 @@ end
 Database = CouchRest.database!('http://127.0.0.1:5984/addressbook')
 
 desc "Create COUNT documents in adressbook"
-task :fake do
+task :populate do
   count = ENV['COUNT'] || 1
 
   Database.recreate!
@@ -62,6 +62,8 @@ task :fake do
 
     puts doc.to_json
     Database.save_doc(doc)
+
+    Rake::Task['views'].execute
     
   end
 
