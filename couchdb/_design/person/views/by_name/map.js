@@ -9,6 +9,6 @@
 
 function(doc) {
   if (doc.last_name && doc.first_name) {
-    emit( doc.last_name + ' ' + doc.first_name, 1 )
+    emit( doc.last_name + ' ' + doc.first_name, doc )
   }
 }
