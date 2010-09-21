@@ -14,6 +14,8 @@ function(doc, req) {
     return (<html>
       <head>
         <title>{full_name} (Address Book)</title>
+        <link rel="stylesheet" href="../../../assets/style.css" />
+        <link rel="shortcut icon" href="../../../assets/favicon.ico" />
       </head>
       <body>
         <h1>{full_name}</h1>
