@@ -1,0 +1,18 @@
+body
+  { color: #222;
+    background: #EDF0F1;
+    font-family: 'Helvetica', sans-serif;
+    font-size: 86%;
+    margin: 4em 6em; }
+
+a
+  { color: #222; }
+
+h1
+  { padding-bottom: 0.5em;
+    border-bottom: 1px solid #444; }
+
+p
+  { padding-bottom: 1em;
+    margin-top: 1em;
+    border-bottom: 1px solid #ccc; }
