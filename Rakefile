@@ -2,6 +2,8 @@ require 'rake'
 require 'couchrest'
 require 'faker'
 require 'active_support/json'
+require 'pathname'
+require 'rack/mime'
 
 class String
   def parameterize
@@ -69,7 +71,7 @@ task :populate do
 
 end
 
-desc "Upload database logic from ./couchdb/_design/views"
+desc "Upload database logic from ./couchdb/_design/person"
 task :views do
   require 'couch_docs/design_directory' # Note: Gem version blows up on RestClient version incompatibility with CouchRest
   dir = CouchDocs::DesignDirectory.new('couchdb/_design/person')
@@ -80,4 +82,30 @@ task :views do
   p doc['views'].keys
   response = Database.save_doc(doc)
   p response
+end
+
+desc "Upload assets from ./couchdb/_design/assets"
+task :assets do
+  assets_folder = Pathname.new('couchdb/_design/assets')
+
+  doc = {
+    '_id'   => '_design/assets',
+    '_attachments' => {},
+  }
+
+  puts "* Reading assets in '#{assets_folder}':"
+  FileList.new("#{assets_folder}/**/*.*").each do |source|
+    attachment = source.gsub(Regexp.new("^#{assets_folder}/(.*)$"), '\1')
+    puts "  - #{attachment}"
+    doc['_attachments'][attachment] = {
+      'content_type' => Rack::Mime.mime_type( File.extname(assets_folder.join(attachment)) ),
+      'data' => File.read(assets_folder.join(attachment))
+    }
+  end
+
+  rev = Database.get('_design/assets')['_rev'] rescue nil
+  doc.update( {'_rev' => rev} ) if rev
+
+  p doc['_attachments'].keys
+  Database.save_doc(doc)
 end
