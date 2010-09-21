@@ -1,0 +1,54 @@
+{
+   "_id"         : "clara-rice",
+   "_rev"        : "1-def456",
+   "first_name"  : "Clara",
+   "last_name"   : "Rice",
+   "phone"       : "+000 123 456 789",
+   "address"     : {
+     "street_name"   : "Hill Road",
+     "street_number" : "123A",
+     "city"          : "Hillshire"
+   },
+   "occupation" : "model",
+   "birthday"   : "1970/05/01 4:00:00 +0000",
+   "interests"  : ["footbal", "cars"],
+   "created_at" : "2010/01/01 10:00:00 +0000"
+}
+
+// -----
+
+{
+   "_id"         : "clara-rice",
+   "_rev"        : "1-def456",
+
+   "first_name"  : "Clara",
+   "last_name"   : "Rice",
+
+   "phones"      : {
+     "mobile" : "0000 777 888 999"
+     "home"   : "0000 123 456 789",
+     "work"   : "0000 314 181 116"
+   },
+
+   "addresses"   : {
+     "home"   : {
+       "street"  : "Wintheiser Ports",
+       "number"  : "789/23",
+       "city"    : "Erinshire",
+       "country" : "United Kingdom"
+     },
+     "work"   : {
+        "street"  : "Heaney Manor",
+        "number"  : "81442",
+        "city"    : "Port Cassidystad",
+        "country" : "United Kingdom"
+      },
+   },
+
+   "occupation" : "model",
+   "birthday"   : "1970/05/01",
+
+   "groups"     : ["friends", "models"],
+
+   "created_at" : "2010/01/01 10:00:00 +0000"
+}
