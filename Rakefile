@@ -65,3 +65,12 @@ task :fake do
   end
 
 end
+
+desc "Upload database logic from ./couchdb/_design/views"
+task :views do
+  require 'couch_docs/design_directory' # Note: Gem version blows up on RestClient version incompatibility with CouchRest
+  dir = CouchDocs::DesignDirectory.new('couchdb/_design/person')
+  p dir.to_hash
+  Database = CouchRest.database!('http://127.0.0.1:5984/addressbook')
+  Database.save_doc(dir.to_hash.update({ '_id' => '_design/person', 'language' => 'javascript' }))
+end
