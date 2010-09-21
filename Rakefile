@@ -19,6 +19,9 @@ desc "Create COUNT documents in adressbook"
 task :fake do
   count = ENV['COUNT'] || 1
 
+  Database = CouchRest.database!('http://127.0.0.1:5984/addressbook')
+  Database.recreate!
+
   count.to_i.times do |i|
     name       = [Faker::Name.first_name, Faker::Name.last_name]
     id         = name.join(' ').parameterize
@@ -34,7 +37,7 @@ task :fake do
       hash
     end
 
-    occupation = %w{model programmer doctor}.rand
+    occupation = %w{supermodel programmer designer}.rand
 
     birthday   = Time.local(Time.now.year - rand(80), rand(12)+1, rand(31)+1).strftime("%Y/%m/%d")
 
@@ -42,7 +45,7 @@ task :fake do
 
 
     doc = {
-      :id         => id,
+      '_id'       => id,
       :first_name => name.first,
       :last_name  => name.last,
 
@@ -57,6 +60,8 @@ task :fake do
     }
 
     puts doc.to_json
+    Database.save_doc(doc)
+    
   end
 
 end
