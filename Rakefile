@@ -28,7 +28,7 @@ Database = CouchRest.database!('http://127.0.0.1:5984/addressbook')
 
 desc "Create COUNT documents in adressbook"
 task :populate do
-  count = ENV['COUNT'] || 1
+  count = ENV['COUNT'] || 10
 
   Database.recreate!
 
