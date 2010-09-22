@@ -25,6 +25,18 @@ end
 Database = CouchRest.database!('http://127.0.0.1:5984/addressbook')
 
 
+desc "Populate the database and upload application logic/assets"
+task :default => [:populate, :views, :assets] do
+  puts "-"*80
+  puts "Uploaded application data, code and assets into database, please check:".bold, "",
+       " * http://localhost:5984/_utils/database.html?addressbook",
+       " * http://localhost:5984/_utils/database.html?addressbook/_design/person/_view/by_groups",
+       " * http://localhost:5984/addressbook/_design/person/_view/by_groups?group=true",
+       " * http://localhost:5984/addressbook/_design/person/_list/all/all", ""
+  puts "Relevant code is in the couchdb/_design/person folder", ""
+end
+
+
 
 desc "Create COUNT documents in adressbook"
 task :populate do
