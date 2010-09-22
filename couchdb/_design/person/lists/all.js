@@ -15,6 +15,8 @@ function(head, req) {
     send( (<p><a href={'../../_show/detail/'+doc._id}>{doc.first_name} {doc.last_name}</a></p>).toXMLString() )
   }
 
+  send( (<p><a href={'../../_list/csv/'+req.path.pop()}><strong>Export to CSV</strong></a></p>).toXMLString() )
+
   send(footer)
 
 }
