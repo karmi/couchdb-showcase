@@ -1,9 +1,12 @@
+require 'rubygems'
+require 'bundler'
+Bundler.setup
+
 require 'rake'
 require 'couchrest'
 require 'faker'
-require 'active_support/json'
-require 'pathname'
 require 'rack/mime'
+require 'active_support/json'
 
 class String
   def parameterize
