@@ -82,7 +82,7 @@ end
 
 desc "Upload database logic from ./couchdb/_design/person"
 task :views do
-  require 'couch_docs/design_directory' # Note: Gem version blows up on RestClient version incompatibility with CouchRest
+  require 'vendor/couch_docs/design_directory' # Note: Gem version blows up on RestClient version incompatibility with CouchRest
   dir = CouchDocs::DesignDirectory.new('couchdb/_design/person')
   doc = dir.to_hash
   doc.update '_id' => '_design/person', 'language' => 'javascript'
