@@ -61,7 +61,7 @@ task :populate do
 
     occupation = %w{supermodel programmer designer}.rand
 
-    birthday   = Time.local(Time.now.year - rand(80), rand(12)+1, rand(31)+1).strftime("%Y/%m/%d")
+    birthday   = Time.local(Time.now.year-20 - rand(20), [2, 5, 11].send(:rand), rand(31)+1).strftime("%Y/%m/%d")
 
     groups     = %w{family friends work}.random_slice
 
