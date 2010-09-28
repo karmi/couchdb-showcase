@@ -11,13 +11,13 @@ the documents and queries into another format (HTML, vCard and CSV).
 Installation
 ------------
 
-You will need a working CouchDB server, Ruby interpreter and Rubygems packaging system.
+You will need a working and running CouchDB version 1.0.1 or higher, a Ruby interpreter and a Rubygems packaging system.
 
-First make sure, you have [Bundler](http://gembundler.com/) gem installed:
+First make sure that you have the [Bundler](http://gembundler.com/) gem installed:
 
     $ gem list bundler
 
-If not, install the gem:
+If not, install it:
 
     $ sudo gem install bundler
 
@@ -25,7 +25,7 @@ Then, run the check for the required Rubygems:
 
     $ bundle list
 
-Install missing gems:
+And install thosse missing:
 
     $ bundle install
 
