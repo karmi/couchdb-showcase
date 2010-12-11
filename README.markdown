@@ -8,6 +8,8 @@ to query the data, as well as [_show](http://guide.couchdb.org/draft/show.html) 
 [_list](http://guide.couchdb.org/draft/transforming.html) functions to transform
 the documents and queries into another format (HTML, vCard and CSV).
 
+After installation, your application should be available here: <http://localhost:5984/addressbook/_design/person/_list/all/all>.
+
 Installation
 ------------
 
