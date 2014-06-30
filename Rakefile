@@ -4,7 +4,7 @@ Bundler.setup
 
 require 'rake'
 require 'couchrest'
-require 'faker'
+require 'ffaker'
 require 'rack/mime'
 require 'active_support/json'
 require 'active_support/core_ext/hash'
@@ -52,16 +52,16 @@ task :populate do
     addresses  = %w{work home       }.random_slice.inject({}) do |hash, type|
       hash[type] = {
         :street  => Faker::Address.street_name,
-        :number  => Faker.numerify(%w{### #### ###/##}.rand),
+        :number  => Faker.numerify(%w{### #### ###/##}.sample),
         :city    => Faker::Address.city,
-        :country => ['Australia', 'United Kingdom', 'New Zealand'].rand
+        :country => ['Australia', 'United Kingdom', 'New Zealand'].sample
       }
       hash
     end
 
-    occupation = %w{supermodel programmer designer}.rand
+    occupation = %w{supermodel programmer designer}.sample
 
-    birthday   = Time.local(Time.now.year-20 - rand(20), [2, 5, 11].send(:rand), rand(31)+1).strftime("%Y/%m/%d")
+    birthday   = Time.local(Time.now.year-20 - rand(20), [2, 5, 11].send(:sample), rand(31)+1).strftime("%Y/%m/%d")
 
     groups     = %w{family friends work}.random_slice
 
@@ -94,7 +94,7 @@ end
 
 desc "Upload database logic from ./couchdb/_design/person"
 task :views do
-  require 'vendor/couch_docs/design_directory' # Note: Gem version blows up on RestClient version incompatibility with CouchRest
+  require './vendor/couch_docs/design_directory' # Note: Gem version blows up on RestClient version incompatibility with CouchRest
   dir = CouchDocs::DesignDirectory.new('couchdb/_design/person')
   doc = dir.to_hash
   doc.update '_id' => '_design/person', 'language' => 'javascript'
